@@ -11,6 +11,7 @@
 
     <modules>
         <module>portal-scs</module>
+        <module>aquarist-scs</module>
         <!-- outros módulos -->
     </modules>
 
