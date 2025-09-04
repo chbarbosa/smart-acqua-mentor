@@ -2,8 +2,7 @@ package com.smartacqua.portal;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -22,40 +21,55 @@ public class MainView extends VerticalLayout {
 
         add(new H1("Smart Acqua Mentor"));
 
-        HorizontalLayout cardLayout = new HorizontalLayout();
-        cardLayout.setSpacing(true);
-        cardLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        GridLayout grid = new GridLayout(2, 2);
+        grid.setWidth("100%");
+        //grid.setSpacing(true);
 
-        cardLayout.add(
-                createModuleCard("Aquarist", "Manage your profile", "http://localhost:8081"),
-                createModuleCard("Aquarium", "Track your tanks", "http://localhost:8082"),
-                createModuleCard("Mentor", "Get AI advice", "http://localhost:8083"),
-                createModuleCard("Retune", "Switch your AI model", "http://localhost:8084")
-        );
+        grid.add(createCard("Aquarist", "Manage your profile", "👤", "#E3F2FD", "http://localhost:8081"));
+        grid.add(createCard("Aquarium", "Track your tanks", "🐠", "#E8F5E9", "http://localhost:8082"));
+        grid.add(createCard("Mentor", "Get AI advice", "🧠", "#FFF3E0", "http://localhost:8083"));
+        grid.add(createCard("Retune", "Switch your AI model", "🔄", "#F3E5F5", "http://localhost:8084"));
 
-        add(cardLayout);
+        add(grid);
     }
 
-    private VerticalLayout createModuleCard(String title, String description, String link) {
-        VerticalLayout card = new VerticalLayout();
-        card.setWidth("220px");
-        card.setPadding(true);
-        card.setSpacing(false);
-        card.getStyle().set("border", "1px solid #ccc");
-        card.getStyle().set("border-radius", "8px");
-        card.getStyle().set("box-shadow", "2px 2px 8px rgba(0,0,0,0.1)");
-        card.getStyle().set("padding", "16px");
-        card.getStyle().set("text-align", "center");
+    private Div createCard(String title, String description, String icon, String bgColor, String link) {
+        Div card = new Div();
+        card.getStyle()
+                .set("background-color", bgColor)
+                .set("border-radius", "12px")
+                .set("padding", "20px")
+                .set("box-shadow", "0 2px 6px rgba(0,0,0,0.1)")
+                .set("cursor", "pointer")
+                .set("transition", "transform 0.2s ease-in-out")
+                .set("text-align", "center");
 
-        H1 cardTitle = new H1(title);
-        cardTitle.getStyle().set("font-size", "20px");
-        cardTitle.getStyle().set("margin-bottom", "8px");
+        card.addClickListener(e -> UI.getCurrent().getPage().setLocation(link));
 
-        Button accessButton = new Button("Access", e ->
-                UI.getCurrent().getPage().setLocation(link)
+        card.getElement().executeJs(
+                "this.addEventListener('mouseenter', () => this.style.transform = 'scale(1.03)');" +
+                        "this.addEventListener('mouseleave', () => this.style.transform = 'scale(1)');"
         );
 
-        card.add(cardTitle, new com.vaadin.flow.component.html.Span(description), accessButton);
+        H2 titleLabel = new H2(icon + " " + title);
+        titleLabel.getStyle().set("margin", "0").set("font-size", "20px");
+
+        Span descLabel = new Span(description);
+        descLabel.getStyle().set("font-size", "14px").set("color", "#555");
+
+        card.add(titleLabel, descLabel);
         return card;
     }
+
+    // Helper layout for 2x2 grid
+    private static class GridLayout extends Div {
+        public GridLayout(int cols, int rows) {
+            getStyle()
+                    .set("display", "grid")
+                    .set("grid-template-columns", "1fr 1fr")
+                    .set("gap", "20px")
+                    .set("padding", "20px");
+        }
+    }
 }
+
