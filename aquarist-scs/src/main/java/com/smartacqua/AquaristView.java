@@ -28,9 +28,10 @@ public class AquaristView extends VerticalLayout {
         Span result = new Span();
 
         register.addClickListener(e -> {
-            AquaristDTO dto = service.register(name.getValue(), email.getValue(), phone.getValue());
-            session.setAquaristCode(dto.getCode());
-            result.setText("Your aquarist code: " + dto.getCode());
+            Aquarist aquarist =
+                    service.register(name.getValue(), email.getValue(), phone.getValue());
+            session.setAquaristCode(aquarist.getCode());
+            result.setText("Your aquarist code: " + aquarist.getCode());
         });
 
         add(title, name, email, phone, register, result);
