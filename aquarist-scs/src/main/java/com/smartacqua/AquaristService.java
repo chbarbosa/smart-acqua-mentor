@@ -36,6 +36,19 @@ public class AquaristService {
 
     public Optional<Aquarist> findByCode(String code) {
         return repository.findByCode(code);
+    }public void updateAquarist(String code, String name, String email, String phone, String rawPassword) {
+        Optional<Aquarist> opt = repository.findByCode(code);
+        if (opt.isPresent()) {
+            Aquarist a = opt.get();
+            a.setName(name);
+            a.setEmail(email);
+            a.setPhone(phone);
+            if (rawPassword != null && !rawPassword.isBlank()) {
+                a.setPassword(encoder.encode(rawPassword));
+            }
+            repository.save(a);
+        }
     }
+
 }
 
