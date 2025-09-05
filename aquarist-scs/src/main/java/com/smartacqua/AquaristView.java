@@ -4,6 +4,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -23,15 +24,16 @@ public class AquaristView extends VerticalLayout {
         TextField name = new TextField("Name");
         TextField email = new TextField("Email");
         TextField phone = new TextField("Phone");
+        PasswordField password = new PasswordField("Password");
 
-        Button register = new Button("Generate Code");
+        Button register = new Button("Register");
         Span result = new Span();
 
         register.addClickListener(e -> {
             Aquarist aquarist =
-                    service.register(name.getValue(), email.getValue(), phone.getValue());
+                    service.register(name.getValue(), email.getValue(), phone.getValue(), password.getValue());
             session.setAquaristCode(aquarist.getCode());
-            result.setText("Your aquarist code: " + aquarist.getCode());
+            result.setText("Registration successful.");
         });
 
         add(title, name, email, phone, register, result);
