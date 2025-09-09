@@ -1,6 +1,7 @@
 package com.smartacqua;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
@@ -9,7 +10,6 @@ import com.vaadin.flow.component.shared.HasValidationProperties;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.textfield.TextFieldBase;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -49,6 +49,8 @@ public class AquaristView extends VerticalLayout {
                 email.setValue(a.getEmail());
                 phone.setValue(a.getPhone());
                 actionButton.setText("Update");
+                actionButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_CONTRAST);
+
 
                 actionButton.addClickListener(e -> {
                     if (validForm(name, phone, email, password)) {
@@ -61,6 +63,8 @@ public class AquaristView extends VerticalLayout {
             }
         } else {
             actionButton.setText("Register");
+            actionButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
+
 
             actionButton.addClickListener(e -> {
                 if (validForm(name, phone, email, password)) {
