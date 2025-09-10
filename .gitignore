@@ -24,6 +24,8 @@ hs_err_pid*
 replay_pid*
 /aquarist-scs/target/
 /portal-scs/target/
-/aquarist-scs/frontend/
-/portal-scs/frontend/
 /.idea/
+/aquarist-scs/frontend/generated/
+/aquarist-scs/frontend/index.html
+/portal-scs/frontend/generated/
+/portal-scs/frontend/index.html
